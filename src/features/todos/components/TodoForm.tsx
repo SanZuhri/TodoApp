@@ -46,16 +46,7 @@ export const TodoForm = ({
     setPriority('medium');
   };
 
-  const handleAddCategory = (e: React.MouseEvent) => {
-    e.preventDefault();
-    const trimmedCategory = newCategory.trim();
-    if (trimmedCategory) {
-      setCategory(trimmedCategory);
-      setNewCategory('');
-      // onAddCategory is optional, so we don't call it if not provided
-    }
-    setIsCategoryInput(false);
-  };
+
 
   return (
     <form onSubmit={handleSubmit} className={`space-y-4 ${className}`}>

@@ -1,17 +1,20 @@
 # 📝 Minimal To-Do List
 
-A clean, monochrome task management app built with React, TypeScript, and Tailwind CSS. Focus on productivity with a distraction-free interface.
+A clean, monochrome task management app built with React, TypeScript, and Tailwind CSS. Focus on productivity with a distraction-free interface featuring subtasks, filtering, and progress tracking.
 
 ## ✨ Features
 
 - **Minimal Design** - Monochrome interface with subtle dot pattern background
-- **Task Management** - Add, edit, delete tasks with categories, priorities, and due dates
-- **Subtasks** - Break down tasks into smaller, manageable items
+- **Task Management** - Add, edit, delete tasks with priorities and categories
+- **Task Organization** - Organize tasks with priorities and categories
 - **Smart Filtering** - Search by text, filter by priority, category, and status
-- **Progress Tracking** - Visual statistics and progress bar
-- **Data Persistence** - Local storage with export/import functionality
-- **Dark Mode** - Seamless theme switching
-- **Responsive** - Works perfectly on desktop and mobile
+- **Progress Tracking** - Visual statistics, progress bar, and completion percentages
+- **Pagination** - Efficient handling of large task lists (20 items per page)
+- **Data Persistence** - Local storage with export/import JSON functionality
+- **Dark/Light Mode** - Seamless theme switching with system preference detection
+- **Responsive** - Optimized for desktop and mobile devices
+- **Accessibility** - Keyboard navigation, ARIA labels, and screen reader support
+- **Performance** - Optimized with React.memo, lazy loading, and efficient re-renders
 
 ## 🚀 Quick Start
 
@@ -30,23 +33,26 @@ Visit `http://localhost:5173` to see your app.
 ### Adding Tasks
 1. Click "Add a new task" to expand the form
 2. Enter task description
-3. Optionally add category, priority, and due date
+3. Select priority level (Low/Medium/High)
 4. Click "Add Task" or press Enter
 
 ### Managing Tasks
 - **Complete**: Click the checkbox to mark tasks as done
-- **Edit**: Click the edit icon to modify task text
-- **Delete**: Click the trash icon to remove tasks
-- **Subtasks**: Click the plus icon to add subtasks
+- **Edit**: Hover over task and click the edit icon to modify task text
+- **Delete**: Hover over task and click the trash icon (with confirmation dialog)
+- **Categories**: Tasks are automatically categorized based on usage
 
 ### Filtering & Search
 - Use the search bar to find tasks by text or category
 - Filter by priority (High/Medium/Low) and status (All/Completed/Pending)
-- Filter by category (dynamically populated from existing tasks)
+- Filter by completion status
+- Pagination for large lists (20 items per page)
 
-### Data Management
-- **Export**: Download your tasks as JSON file
-- **Import**: Upload a previously exported JSON file
+### Settings & Data Management
+- **Theme Toggle**: Switch between light/dark mode or use system preference
+- **About**: View app information and features
+- **Export**: Download your tasks as JSON file via Settings menu
+- **Import**: Upload a previously exported JSON file via Settings menu
 - **Local Storage**: All data is automatically saved locally
 
 ## 🏗️ Tech Stack
@@ -54,10 +60,12 @@ Visit `http://localhost:5173` to see your app.
 - **React 18** with TypeScript
 - **Vite** for fast development and building
 - **Tailwind CSS** for styling
-- **shadcn/ui** component library
+- **shadcn/ui** component library (selected components)
 - **React Router** for navigation
-- **TanStack Query** for data management
+- **next-themes** for theme management
+- **Sonner** for toast notifications
 - **Lucide React** for icons
+- **UUID** for unique identifiers
 
 ## 📁 Project Structure
 
@@ -76,10 +84,12 @@ src/
 │   ├── types/
 │   │   └── todo.types.ts
 │   └── TodosPage.tsx
-├── components/ui/      # shadcn/ui components
-├── hooks/              # Custom hooks
-├── lib/                # Utilities
-└── pages/              # Page components
+├── components/
+│   ├── ui/            # shadcn/ui components (used only)
+│   └── common/        # Shared components
+├── hooks/             # Custom hooks (used only)
+├── lib/               # Utilities (used only)
+└── pages/             # Page components
 ```
 
 ## 🎨 Design System
