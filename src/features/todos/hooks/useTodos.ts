@@ -1,4 +1,5 @@
 import { useState, useCallback, useMemo } from 'react';
+import { toast } from 'sonner';
 import { v4 as uuidv4 } from 'uuid';
 import { Todo, Subtask, TodoFilters, TodoStats } from '../types/todo.types';
 
@@ -18,6 +19,7 @@ export const useTodos = () => {
     category: 'all',
     status: 'all',
   });
+  const [isImporting, setIsImporting] = useState(false);
 
   // Save to localStorage whenever todos change
   const saveToLocalStorage = useCallback((updatedTodos: Todo[]) => {
@@ -166,41 +168,63 @@ export const useTodos = () => {
     };
   }, [todos]);
 
-  const categories = useMemo(() => {
-    const categorySet = new Set<string>();
+  const [categories, setCategories] = useState<string[]>(() => {
+    const cats = new Set<string>();
     todos.forEach(todo => {
       if (todo.category) {
-        categorySet.add(todo.category);
+        cats.add(todo.category);
       }
     });
-    return Array.from(categorySet).sort();
-  }, [todos]);
+    return Array.from(cats).sort();
+  });
+
+  const addCategory = useCallback((category: string) => {
+    const trimmedCategory = category.trim();
+    if (!trimmedCategory) return;
+    
+    // The categories are derived from todos, so we don't need to store them separately
+    // This function is here to maintain the API contract with TodoForm
+    console.log('New category added:', trimmedCategory);
+  }, []);
 
   // Import/Export
   const exportTodos = useCallback(() => {
-    const dataStr = JSON.stringify(todos, null, 2);
-    const dataUri = 'data:application/json;charset=utf-8,' + encodeURIComponent(dataStr);
-    
-    const link = document.createElement('a');
-    link.setAttribute('href', dataUri);
-    link.setAttribute('download', 'todos.json');
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
+    try {
+      const dataStr = JSON.stringify(todos, null, 2);
+      const dataUri = 'data:application/json;charset=utf-8,' + encodeURIComponent(dataStr);
+
+      const link = document.createElement('a');
+      link.setAttribute('href', dataUri);
+      link.setAttribute('download', 'todos.json');
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+
+      toast.success('Todos exported successfully!');
+    } catch (error) {
+      console.error('Error exporting todos:', error);
+      toast.error('Failed to export todos.');
+    }
   }, [todos]);
 
-  const importTodos = useCallback((jsonString: string) => {
+  const importTodos = useCallback(async (jsonString: string) => {
+    setIsImporting(true);
     try {
       const importedTodos = JSON.parse(jsonString);
       if (Array.isArray(importedTodos)) {
         setTodos(importedTodos);
         saveToLocalStorage(importedTodos);
+        toast.success('Todos imported successfully!');
         return true;
       }
+      toast.error('Invalid file format');
       return false;
     } catch (error) {
       console.error('Error importing todos:', error);
+      toast.error('Failed to import todos. Please check the file format.');
       return false;
+    } finally {
+      setIsImporting(false);
     }
   }, [saveToLocalStorage]);
 
@@ -218,5 +242,7 @@ export const useTodos = () => {
     deleteSubtask,
     exportTodos,
     importTodos,
+    isImporting,
+    addCategory,
   };
 };

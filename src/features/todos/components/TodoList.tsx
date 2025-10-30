@@ -1,27 +1,50 @@
+import React, { useCallback, useState } from 'react';
 import { Todo } from '../types/todo.types';
-import { TodoItem } from './TodoItem';
+import { TodoItem, TodoItemSkeleton } from './TodoItem';
+import { Button } from '@/components/ui/button';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 
 export interface TodoListProps {
   todos: Todo[];
   onToggleTodo: (id: string) => void;
   onDeleteTodo: (id: string) => void;
-  onAddSubtask: (todoId: string, text: string) => void;
-  onToggleSubtask: (todoId: string, subtaskId: string) => void;
-  onDeleteSubtask: (todoId: string, subtaskId: string) => void;
+  onEditTodo?: (id: string, text: string) => void;
   emptyState?: React.ReactNode;
   className?: string;
+  isLoading?: boolean;
+  itemsPerPage?: number;
 }
 
-export const TodoList = ({
+export const TodoList = React.memo(({
   todos,
   onToggleTodo,
   onDeleteTodo,
-  onAddSubtask,
-  onToggleSubtask,
-  onDeleteSubtask,
+  onEditTodo,
   emptyState,
   className = '',
+  isLoading = false,
+  itemsPerPage = 20,
 }: TodoListProps) => {
+  const [currentPage, setCurrentPage] = useState(1);
+
+  const totalPages = Math.ceil(todos.length / itemsPerPage);
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
+  const currentTodos = todos.slice(startIndex, endIndex);
+
+  const handleKeyDown = useCallback((event: React.KeyboardEvent, todoId: string) => {
+    if (event.key === 'Enter' || event.key === ' ') {
+      event.preventDefault();
+      onToggleTodo(todoId);
+    } else if (event.key === 'Delete' || event.key === 'Backspace') {
+      event.preventDefault();
+      onDeleteTodo(todoId);
+    }
+  }, [onToggleTodo, onDeleteTodo]);
+
+  const handlePageChange = useCallback((page: number) => {
+    setCurrentPage(page);
+  }, []);
   if (todos.length === 0) {
     return emptyState ? (
       <div className={`py-12 ${className}`}>
@@ -54,19 +77,67 @@ export const TodoList = ({
     );
   }
 
+  if (isLoading) {
+    return (
+      <div className={`space-y-2 ${className}`}>
+        {Array.from({ length: 5 }).map((_, index) => (
+          <TodoItemSkeleton key={index} />
+        ))}
+      </div>
+    );
+  }
+
   return (
-    <div className={`space-y-2 ${className}`}>
-      {todos.map((todo) => (
-        <TodoItem
-          key={todo.id}
-          todo={todo}
-          onToggle={onToggleTodo}
-          onDelete={onDeleteTodo}
-          onAddSubtask={onAddSubtask}
-          onToggleSubtask={onToggleSubtask}
-          onDeleteSubtask={onDeleteSubtask}
-        />
-      ))}
+    <div className={`space-y-4 ${className}`}>
+      <div className="space-y-2 sm:space-y-1" role="list" aria-label="Todo list">
+        {currentTodos.map((todo) => (
+          <div
+            key={todo.id}
+            role="listitem"
+            tabIndex={0}
+            onKeyDown={(e) => handleKeyDown(e, todo.id)}
+            aria-label={`Todo: ${todo.text}, priority: ${todo.priority}, ${todo.completed ? 'completed' : 'pending'}`}
+          >
+            <TodoItem
+              todo={todo}
+              onToggle={onToggleTodo}
+              onDelete={onDeleteTodo}
+              onEdit={onEditTodo}
+            />
+          </div>
+        ))}
+      </div>
+
+      {totalPages > 1 && (
+        <div className="flex items-center justify-between pt-4 border-t border-border/30">
+          <div className="text-sm text-muted-foreground">
+            Showing {startIndex + 1}-{Math.min(endIndex, todos.length)} of {todos.length} todos
+          </div>
+          <div className="flex items-center gap-2">
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => handlePageChange(currentPage - 1)}
+              disabled={currentPage === 1}
+              aria-label="Previous page"
+            >
+              <ChevronLeft className="h-4 w-4" />
+            </Button>
+            <span className="text-sm">
+              Page {currentPage} of {totalPages}
+            </span>
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => handlePageChange(currentPage + 1)}
+              disabled={currentPage === totalPages}
+              aria-label="Next page"
+            >
+              <ChevronRight className="h-4 w-4" />
+            </Button>
+          </div>
+        </div>
+      )}
     </div>
   );
-};
+});

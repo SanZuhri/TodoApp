@@ -1,3 +1,4 @@
+import React from 'react';
 import { TodoStats as TodoStatsType } from '../types/todo.types';
 
 interface TodoStatsProps {
@@ -5,7 +6,7 @@ interface TodoStatsProps {
   className?: string;
 }
 
-export const TodoStats = ({ stats, className = '' }: TodoStatsProps) => {
+export const TodoStats = React.memo(({ stats, className = '' }: TodoStatsProps) => {
   const { total, completed, pending, progress } = stats;
 
   if (total === 0) {
@@ -65,4 +66,4 @@ export const TodoStats = ({ stats, className = '' }: TodoStatsProps) => {
       </div>
     </div>
   );
-};
+});

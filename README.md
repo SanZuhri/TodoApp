@@ -1,93 +1,100 @@
-# 🚀 Ultimate React Template
+# 📝 Minimal To-Do List
 
-A clean, minimalist React starter template with everything you need to build modern web applications.
+A clean, monochrome task management app built with React, TypeScript, and Tailwind CSS. Focus on productivity with a distraction-free interface.
 
 ## ✨ Features
 
-- **Simple & Clean Design** - Minimalist interface with warm neutral colors
-- **Complete Foundation** - Design system, utilities, hooks, and 50+ UI components
-- **Production Ready** - TypeScript, Tailwind CSS, React Query, and more
-- **Well Documented** - Comprehensive guides and examples
-
-## 📦 What's Included
-
-### Core Stack
-- React 18 with TypeScript
-- Vite for fast builds
-- Tailwind CSS for styling
-- shadcn/ui component library
-- React Router for navigation
-- TanStack Query for data fetching
-
-### Utilities & Helpers
-- **API Client** - Complete HTTP client with error handling
-- **Validators** - Form validation helpers
-- **Formatters** - Date, currency, file size formatting
-- **Storage** - Type-safe localStorage/sessionStorage
-
-### Custom Hooks
-- `useDebounce` - Debounce values
-- `useLocalStorage` - Sync state with localStorage
-- `useMediaQuery` - Responsive breakpoints
-- `useOnClickOutside` - Detect outside clicks
-- `useCopyToClipboard` - Copy to clipboard
-
-### Components
-- Layout components (Container, Section, PageHeader)
-- Common components (Loading, ErrorBoundary, EmptyState)
-- 50+ UI components from shadcn/ui
+- **Minimal Design** - Monochrome interface with subtle dot pattern background
+- **Task Management** - Add, edit, delete tasks with categories, priorities, and due dates
+- **Subtasks** - Break down tasks into smaller, manageable items
+- **Smart Filtering** - Search by text, filter by priority, category, and status
+- **Progress Tracking** - Visual statistics and progress bar
+- **Data Persistence** - Local storage with export/import functionality
+- **Dark Mode** - Seamless theme switching
+- **Responsive** - Works perfectly on desktop and mobile
 
 ## 🚀 Quick Start
 
 ```bash
-# Clone the repository
-git clone <YOUR_GIT_URL>
-
-# Navigate to directory
-cd <YOUR_PROJECT_NAME>
-
 # Install dependencies
 npm install
 
-# Start development
+# Start development server
 npm run dev
 ```
 
-Visit `http://localhost:8080` to see your app.
+Visit `http://localhost:5173` to see your app.
+
+## 📱 Usage
+
+### Adding Tasks
+1. Click "Add a new task" to expand the form
+2. Enter task description
+3. Optionally add category, priority, and due date
+4. Click "Add Task" or press Enter
+
+### Managing Tasks
+- **Complete**: Click the checkbox to mark tasks as done
+- **Edit**: Click the edit icon to modify task text
+- **Delete**: Click the trash icon to remove tasks
+- **Subtasks**: Click the plus icon to add subtasks
+
+### Filtering & Search
+- Use the search bar to find tasks by text or category
+- Filter by priority (High/Medium/Low) and status (All/Completed/Pending)
+- Filter by category (dynamically populated from existing tasks)
+
+### Data Management
+- **Export**: Download your tasks as JSON file
+- **Import**: Upload a previously exported JSON file
+- **Local Storage**: All data is automatically saved locally
+
+## 🏗️ Tech Stack
+
+- **React 18** with TypeScript
+- **Vite** for fast development and building
+- **Tailwind CSS** for styling
+- **shadcn/ui** component library
+- **React Router** for navigation
+- **TanStack Query** for data management
+- **Lucide React** for icons
 
 ## 📁 Project Structure
 
 ```
 src/
-├── components/
-│   ├── common/        # Reusable components
-│   ├── layout/        # Layout components
-│   └── ui/           # shadcn/ui components
-├── hooks/            # Custom React hooks
-├── lib/              # Utilities and helpers
-├── pages/            # Page components
-└── types/            # TypeScript definitions
+├── features/todos/
+│   ├── components/     # Todo-specific components
+│   │   ├── TodoForm.tsx
+│   │   ├── TodoItem.tsx
+│   │   ├── TodoList.tsx
+│   │   ├── TodoFilters.tsx
+│   │   ├── TodoStats.tsx
+│   │   └── ImportExport.tsx
+│   ├── hooks/
+│   │   └── useTodos.ts
+│   ├── types/
+│   │   └── todo.types.ts
+│   └── TodosPage.tsx
+├── components/ui/      # shadcn/ui components
+├── hooks/              # Custom hooks
+├── lib/                # Utilities
+└── pages/              # Page components
 ```
 
 ## 🎨 Design System
 
-Simple, warm neutral color palette with full dark mode support. All colors are defined as HSL values in `src/index.css`.
+Monochrome color palette with subtle textures:
 
 ### Light Mode
-- Background: Warm beige-gray
-- Foreground: Soft dark brown-gray
-- Primary: Muted brownish-gray
+- Background: Soft gray tones
+- Foreground: Dark gray text
+- Accents: Muted grays
 
-### Dark Mode  
-- Background: Soft neutral gray-blue
+### Dark Mode
+- Background: Deep gray
 - Foreground: Light gray
-- Primary: Light gray-blue
-
-## 📚 Documentation
-
-- **README.md** - This file, project overview
-- **TEMPLATE_GUIDE.md** - Detailed usage guide with examples
-- **.env.example** - Environment variables template
+- Accents: Subtle gray highlights
 
 ## 🛠️ Available Scripts
 
@@ -95,36 +102,33 @@ Simple, warm neutral color palette with full dark mode support. All colors are d
 npm run dev      # Start development server
 npm run build    # Build for production
 npm run preview  # Preview production build
+npm run lint     # Run ESLint
 ```
 
 ## 🌐 Deployment
 
-Deploy to any static hosting:
-- Lovable (built-in)
+Deploy to any static hosting service:
 - Vercel
 - Netlify
+- GitHub Pages
 - Cloudflare Pages
 
-Just run `npm run build` and deploy the `dist` folder.
+Run `npm run build` and deploy the `dist` folder.
 
 ## 📖 Learn More
 
-- [Lovable Documentation](https://docs.lovable.dev/)
 - [React Documentation](https://react.dev/)
 - [Tailwind CSS](https://tailwindcss.com/)
 - [shadcn/ui](https://ui.shadcn.com/)
+- [Vite](https://vitejs.dev/)
 
 ## 🤝 Contributing
 
 Feel free to:
 - Report bugs
 - Suggest features
-- Submit pull requests
+
 
 ## 📄 License
 
 Free to use for personal and commercial projects.
-
----
-
-Built with ❤️ using [Lovable](https://lovable.dev)
