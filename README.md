@@ -9,6 +9,7 @@ A clean, monochrome task management app built with React, TypeScript, and Tailwi
 - **Task Organization** - Organize tasks with priorities and categories
 - **Smart Filtering** - Search by text, filter by priority, category, and status
 - **Progress Tracking** - Visual statistics, progress bar, and completion percentages
+- **Bulk Actions** - Complete all tasks or clear completed tasks at once
 - **Pagination** - Efficient handling of large task lists (20 items per page)
 - **Data Persistence** - Local storage with export/import JSON functionality
 - **Dark/Light Mode** - Seamless theme switching with system preference detection
@@ -47,6 +48,10 @@ Visit `http://localhost:5173` to see your app.
 - Filter by priority (High/Medium/Low) and status (All/Completed/Pending)
 - Filter by completion status
 - Pagination for large lists (20 items per page)
+
+### Bulk Actions
+- **Complete All**: Mark all pending tasks as completed
+- **Clear Completed**: Remove all completed tasks from the list
 
 ### Settings & Data Management
 - **Theme Toggle**: Switch between light/dark mode or use system preference

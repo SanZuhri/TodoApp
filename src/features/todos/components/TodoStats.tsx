@@ -1,12 +1,21 @@
 import React from 'react';
+import { CheckCheck, Trash2 } from 'lucide-react';
+import { Button } from '@/components/ui/button';
 import { TodoStats as TodoStatsType } from '../types/todo.types';
 
 interface TodoStatsProps {
   stats: TodoStatsType;
+  onCompleteAll?: () => void;
+  onClearCompleted?: () => void;
   className?: string;
 }
 
-export const TodoStats = React.memo(({ stats, className = '' }: TodoStatsProps) => {
+export const TodoStats = React.memo(({
+  stats,
+  onCompleteAll,
+  onClearCompleted,
+  className = ''
+}: TodoStatsProps) => {
   const { total, completed, pending, progress } = stats;
 
   if (total === 0) {
@@ -63,6 +72,38 @@ export const TodoStats = React.memo(({ stats, className = '' }: TodoStatsProps) 
             {completed} of {total} tasks completed
           </div>
         </div>
+
+        {/* Bulk Actions */}
+        {total > 0 && (
+          <div className="col-span-2 sm:col-span-4 mt-4 pt-4 border-t border-border/30">
+            <div className="flex flex-wrap gap-2 justify-center">
+              {pending > 0 && (
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={onCompleteAll}
+                  className="text-xs"
+                  aria-label="Mark all todos as completed"
+                >
+                  <CheckCheck className="h-3 w-3 mr-1" />
+                  Complete All
+                </Button>
+              )}
+              {completed > 0 && (
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={onClearCompleted}
+                  className="text-xs text-destructive hover:text-destructive"
+                  aria-label="Clear all completed todos"
+                >
+                  <Trash2 className="h-3 w-3 mr-1" />
+                  Clear Completed
+                </Button>
+              )}
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );

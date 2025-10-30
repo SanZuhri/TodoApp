@@ -187,6 +187,29 @@ export const useTodos = () => {
     console.log('New category added:', trimmedCategory);
   }, []);
 
+  // Bulk Actions
+  const completeAllTodos = useCallback(() => {
+    setTodos(prevTodos => {
+      const updatedTodos = prevTodos.map(todo => ({
+        ...todo,
+        completed: true,
+        updatedAt: new Date().toISOString(),
+      }));
+      saveToLocalStorage(updatedTodos);
+      return updatedTodos;
+    });
+    toast.success('All todos marked as completed!');
+  }, [saveToLocalStorage]);
+
+  const clearCompletedTodos = useCallback(() => {
+    setTodos(prevTodos => {
+      const updatedTodos = prevTodos.filter(todo => !todo.completed);
+      saveToLocalStorage(updatedTodos);
+      return updatedTodos;
+    });
+    toast.success('Completed todos cleared!');
+  }, [saveToLocalStorage]);
+
   // Import/Export
   const exportTodos = useCallback(() => {
     try {
@@ -240,6 +263,8 @@ export const useTodos = () => {
     addSubtask,
     toggleSubtask,
     deleteSubtask,
+    completeAllTodos,
+    clearCompletedTodos,
     exportTodos,
     importTodos,
     isImporting,

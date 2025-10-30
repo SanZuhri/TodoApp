@@ -41,6 +41,8 @@ export const TodosPage = () => {
     addSubtask,
     toggleSubtask,
     deleteSubtask,
+    completeAllTodos,
+    clearCompletedTodos,
     exportTodos,
     importTodos,
     isImporting,
@@ -163,7 +165,11 @@ export const TodosPage = () => {
       {/* Main Content */}
       <main className="relative max-w-4xl mx-auto px-4 sm:px-6 py-8 sm:py-12 space-y-8 sm:space-y-10">
         {/* Stats */}
-        <TodoStats stats={stats} />
+        <TodoStats
+          stats={stats}
+          onCompleteAll={completeAllTodos}
+          onClearCompleted={clearCompletedTodos}
+        />
 
         {/* Todo Form */}
         <div className="space-y-6">
